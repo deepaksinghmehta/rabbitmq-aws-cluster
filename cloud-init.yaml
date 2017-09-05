@@ -6,7 +6,8 @@ write_files:
   - path: /root/conf/rabbitmq.config
     content: |
         [ { rabbit, [
-          { loopback_users, [ ] } ] }
+          { loopback_users, [ ] } ] },
+          {auth_mechanisms, ['PLAIN', 'AMQPLAIN']}
          ].
   - path: /root/find_hosts.sh
     content: |
@@ -57,7 +58,6 @@ write_files:
         docker exec rabbitmq rabbitmqctl add_user admin ${admin_password}
         docker exec rabbitmq rabbitmqctl set_user_tags admin administrator
         docker exec rabbitmq rabbitmqctl add_user rabbit ${rabbit_password}
-        docker exec rabbitmq rabbitmqctl delete_user guest
 
 runcmd:
   - yum update -y
