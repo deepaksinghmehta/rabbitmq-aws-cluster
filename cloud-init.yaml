@@ -57,6 +57,13 @@ write_files:
         #!/usr/bin/env bash
         docker exec rabbitmq rabbitmqctl add_user admin ${admin_password}
         docker exec rabbitmq rabbitmqctl set_user_tags admin administrator
+        docker exec rabbitmq rabbitmqctl add_user rabbit ${rabbit_password}
+        docker exec rabbitmq rabbitmqctl add_vhost /
+        docker exec rabbitmq rabbitmqctl set_policy -p / ha-three "^" '{"ha-mode":"exactly", "ha-params":${sync_node_count}, "ha-sync-mode":"automatic", "message-ttl":${message_timeout}, "expires":${message_timeout}}'
+        docker exec rabbitmq rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+        docker exec rabbitmq rabbitmqctl set_permissions -p / rabbit ".*" ".*" ".*"
+        docker exec rabbitmq rabbitmqctl delete_user guest
+
 runcmd:
   - yum update -y
   - yum install -y docker jq
@@ -67,3 +74,4 @@ runcmd:
   - sleep 1
   - docker exec rabbitmq bash /tmp/bin/join_cluster.sh $(bash /root/find_hosts.sh)
   - sleep 1
+  - bash /root/configure.sh
