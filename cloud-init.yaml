@@ -7,7 +7,6 @@ write_files:
     content: |
         [ { rabbit, [
           { loopback_users, [ ] } ] }
-          {auth_mechanisms, ['PLAIN', 'AMQPLAIN']}
          ].
   - path: /root/find_hosts.sh
     content: |
