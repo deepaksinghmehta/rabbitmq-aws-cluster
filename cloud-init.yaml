@@ -67,4 +67,3 @@ runcmd:
   - sleep 1
   - docker exec rabbitmq bash /tmp/bin/join_cluster.sh $(bash /root/find_hosts.sh)
   - sleep 1
-  - bash /root/configure.sh
