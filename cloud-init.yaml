@@ -6,7 +6,7 @@ write_files:
   - path: /root/conf/rabbitmq.config
     content: |
         [ { rabbit, [
-          { loopback_users, [ ] } ] },
+          { loopback_users, [ ] } ] }
          ].
   - path: /root/find_hosts.sh
     content: |
